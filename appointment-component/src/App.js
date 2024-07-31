@@ -26,6 +26,7 @@ const App =()=> {
   };
 
   return (
+    <div className='newApptItemCode'>   
     <ApptItem.Appointments
       id="1"
       data={sessions}
@@ -39,6 +40,7 @@ const App =()=> {
       setTenantData={() => {}}
       isGroupClass={false}
     />
+    </div>
   );
 };
 

@@ -496,6 +496,8 @@ export const SectionListItem = ({
                 width: 30,
                 background: '#fff',
                 borderLeft: '1px solid #ddd',
+                textAlign:'center',
+                alignItems:'center',
               }}
               className="flex-c-c"
             >
@@ -506,6 +508,7 @@ export const SectionListItem = ({
                 fill="currentColor"
                 className="bi bi-arrows-move"
                 viewBox="0 0 16 16"
+                style={{verticalAlign:'center'}}
               >
                 <path
                   fillRule="evenodd"

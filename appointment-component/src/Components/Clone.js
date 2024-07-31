@@ -13,7 +13,8 @@ export const CloneToCheck = ({ success, width, height, style = {} }) => {
   return (
     <span style={{ position: 'relative', width, height, ...style }}>
       <FeatherIcons
-        icon={'copy'}
+      // !!!!!    Changed Icon
+        icon={'plus-square'}
         as={'button'}
         style={{
           position: 'absolute',

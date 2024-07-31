@@ -17,7 +17,7 @@ import {
   SectionListItem,
 } from "./PageElements";
 import FeatherIcon from 'feather-icons-react';
-import CopyText from "./CopyText"
+import CopyText from "./CopyText";
 // import { MINUTE_HOUR_DURATION_OPTIONS } from '../../Form/Option';
 // import useUpdateAppointmentTypeApi from '../../AppointmentType/useUpdateAppointmentTypeApi';
 import { Link } from 'react-router-dom';
@@ -28,6 +28,8 @@ import { Link } from 'react-router-dom';
 import IconLoaderCircle from './IconLoaderCircle';
 // import { useAuthApiConfig } from '../../../hooks/useAuthApiConfig';
 import CloneAppointmentType from './Clone';
+import FeatherIcons from 'feather-icons-react';
+
 
 const MINUTE_HOUR_DURATION_OPTIONS = ['hours', 'minutes'];
 
@@ -64,6 +66,9 @@ const ApptItem = ({
   const [durationAmountFocus, setDurationAmountFocus] = useState(false);
   const [durationTypeValue, setDurationTypeValue] = useState(lengthType);
   const [durationTypeFocus, setDurationTypeFocus] = useState(false);
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
 
   // Upcoming bookings state
   // const futureMonth = moment()
@@ -135,6 +140,75 @@ const ApptItem = ({
     clickedRemove ||
     clickedSave;
 
+
+
+
+//!!!!!!!!      Trying to add a dropdown menu for CopyLink btn
+
+// Toggle dropdown visibility
+const toggleDropdown = () => {
+  setIsDropdownOpen(!isDropdownOpen);
+};
+
+// Close dropdown if clicking outside
+const closeDropdown = (event) => {
+  if (!event.target.closest('.dropbtn')) {
+    setIsDropdownOpen(false);
+  }
+};
+
+useEffect(() => {
+  window.addEventListener('click', closeDropdown);
+  return () => {
+    window.removeEventListener('click', closeDropdown);
+  };
+}, []);
+
+
+
+
+const CopyToCheck = ({ success, width, height, style = {} }) => {
+  return (
+    <span style={{ position: 'relative', width, height, ...style }}>
+      <FeatherIcons
+      // !!!!!     Changed icon, possibly making it so that the "Copy Link" btn and the chevron-down are two separate btns.
+        icon={'chevron-down'}
+        as={'button'}
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width,
+          height,
+          // color:'#495057',
+          // border:'solid thin #495057',
+          // borderRadius:'0.15rem',
+          // color:'#007bff',
+          // borderRight: 'solid',
+          // paddingRight:'5px',
+          ...(success ? { opacity: 0 } : { transition: '.25s' }),
+        }}
+      />
+      <FeatherIcons
+        icon={success ? 'check' : 'copy'}
+        className={success ? 'text-success' : ''}
+        as={'button'}
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width,
+          height,
+          ...(success ? { transition: '.25s' } : { opacity: 0 }),
+        }}
+      />
+    </span>
+  );
+};
+
+
+
+
   return (
     <SectionListItem
       id={id}
@@ -154,9 +228,9 @@ const ApptItem = ({
       {...props}
       actions={
 
-        // !!!!!!!      Edited Code       !!!!!!!
-        <select>
-          <option>
+        // !!!!!!!      Edited Code: working on making btn actions into a drop-down menu       !!!!!!!
+        <>
+          <>
             {!editing && projectId !== undefined && (
 
                 <>
@@ -166,26 +240,37 @@ const ApptItem = ({
                       cloneObjectName={titleValue}
                       text={'Clone'}
                       className="btn round pl-0 pr-2 btn-sm"
-                      style={{ marginRight: 3, fontWeight: 'bold', display:"flex" }}
+                      style={{ marginRight: 20, fontWeight: 'bold', display:"flex", letterSpacing:'.7px', border:'1px solid #d2d2d2', padding:'0.5em', borderRadius:'0.25rem'  }}
                     />
                   )}
                 </>
                 )}
-          </option>
-          <option type="button">
-               {!editing && projectId !== undefined && (
-              <>
-                {/* !!!!!!    Took out "add" in line above */}
-                <CopyText
-                  copyText={copyText}
-                  text={'Copy Link'}
-                  className="btn round px-0 btn-sm"
-                  style={{ marginRight: 3, fontWeight: 'bold' }}
-                />
-              </>
+          </>
+          <div className='dropdown'>
+            <button onClick={toggleDropdown} className='dropbtn' style={{ marginRight: 10, fontWeight: 'bold',  height:'32.66px', border: '1px solid #d2d2d2', padding: '0.5em', borderRadius: '0.25rem' }}>
+              <CopyToCheck
+              id='copyLinkHover'
+                width={'1.3em'}
+                height={'1.3em'}
+                marginRight={'4em'}
+                style={{ display: 'inline-block', marginRight:'.5em' }}
+              /> Copy Link
+            </button>
+            <div id="myDropdown" className={`dropdown-content ${isDropdownOpen ? 'show' : ''}`}>
+              {!editing && projectId !== undefined && (
+                <>
+                  <CopyText
+                    copyText={copyText}
+                    text={'Copy Link'}
+                    className="btn round px-0 btn-sm"
+                    style={{ marginRight: 10, padding: '0.5em' }}
+                  />
+                </>
               )}
-          </option>
-        </select>
+              <button style={{padding:'.5em',  marginRight: 10}}>Get Embed Code</button>
+            </div>
+          </div>
+        </>
                   //!!!!!!!!!     Original Code! Editing above code to try and move the "Copy Link" button.
                   // <>
                   //   {!editing && projectId !== undefined && (
@@ -194,18 +279,20 @@ const ApptItem = ({
                   //         <CloneAppointmentType
                   //           cloneObjectId={id}
                   //           cloneObjectName={titleValue}
-                  //           text={'Clone'}
+                  //           text={'Duplicate'}
                   //           className="btn round pl-0 pr-2 btn-sm"
-                  //           style={{ marginRight: 3, fontWeight: 'bold', display:"flex" }}
+                  //           style={{ marginRight: 20, fontWeight: 'bold', display:"flex", letterSpacing:'.7px', border:'1px solid #d2d2d2', padding:'0.5em', borderRadius:'0.25rem' }}
                   //         />
                   //       )}
-                  //       {/* !!!!!!    Took out "add" in line above */}
+                  //       {/* !!!!!!    Took out "add" in line above, changed marginRight, added letterSpacing, border, padding, borderRadius */}
                   //       <CopyText
                   //         copyText={copyText}
                   //         text={'Copy Link'}
                   //         className="btn round px-0 btn-sm"
-                  //         style={{ marginRight: 3, fontWeight: 'bold' }}
+                  //         style={{ marginRight: 10, fontWeight: 'bold', border:'1px solid #d2d2d2', padding:'0.5em', borderRadius:'0.25rem' }} 
+
                   //       />
+                  //       {/* !!!!!!    Added border, padding, borderRadius I found from other buttons on WS site, possibly: -> , color:'#fff' , backgroundColor:'#007bff', padding:'0.65em 1.6em', borderRadius:'1000px' <- */}
                   //     </>
                   //   )}
                   // </>
@@ -559,6 +646,10 @@ function Appointments({
         >
           {boxes && boxes.length > 0 && (
             <Section title={'Visible'} noBackground>
+              <button className='embedCodeBtn' style={{border:'none', backgroundColor:'white'}}>
+              Embed Code
+                <FeatherIcon icon={'more-horizontal'} size={'.85em'} style={{top:'7px', position:'absolute'}}/>
+              </button>
               {boxes
                 .sort((a, b) => a.order - b.order)
                 .map((box, i) => {
