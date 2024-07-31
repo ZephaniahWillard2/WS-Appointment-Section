@@ -29,6 +29,7 @@ import IconLoaderCircle from './IconLoaderCircle';
 // import { useAuthApiConfig } from '../../../hooks/useAuthApiConfig';
 import CloneAppointmentType from './Clone';
 import FeatherIcons from 'feather-icons-react';
+import EmbedCodeButton from './EmbedCodeButton';
 
 
 const MINUTE_HOUR_DURATION_OPTIONS = ['hours', 'minutes'];
@@ -143,7 +144,7 @@ const ApptItem = ({
 
 
 
-//!!!!!!!!      Trying to add a dropdown menu for CopyLink btn
+//!!!!!!!!      Trying to add a dropdown menu for CopyLink btn      !!!!!!!!!
 
 // Toggle dropdown visibility
 const toggleDropdown = () => {
@@ -166,7 +167,7 @@ useEffect(() => {
 
 
 
-
+// !!!!!      Added in CopyToCheck function here, from CopyText to change position of Copy Link Btn. Maybe not needed anymore.
 const CopyToCheck = ({ success, width, height, style = {} }) => {
   return (
     <span style={{ position: 'relative', width, height, ...style }}>
@@ -246,6 +247,7 @@ const CopyToCheck = ({ success, width, height, style = {} }) => {
                 </>
                 )}
           </>
+          {/* !!!!!     Added/Changed elements to Copy Link btn */}
           <div className='dropdown'>
             <button onClick={toggleDropdown} className='dropbtn' style={{ marginRight: 10, fontWeight: 'bold',  height:'32.66px', border: '1px solid #d2d2d2', padding: '0.5em', borderRadius: '0.25rem' }}>
               <CopyToCheck
@@ -535,6 +537,7 @@ function Appointments({
   tenantData,
   setTenantData,
   isGroupClass,
+  projectId,
 }) {
   const user = "test";
   const { subscriptionPlan } = tenantData || {};
@@ -601,6 +604,8 @@ function Appointments({
     }
   }, [data]);
 
+  const link = `${SPARKLE_PATH}${tenantNameAsUrl}?project=${projectId}#bookings`;
+
   return (
     <>
       {(!boxes || boxes.length === 0) && (!hiddenAppointments || hiddenAppointments.length === 0) ? (
@@ -646,10 +651,18 @@ function Appointments({
         >
           {boxes && boxes.length > 0 && (
             <Section title={'Visible'} noBackground>
-              <button className='embedCodeBtn' style={{border:'none', backgroundColor:'white'}}>
+
+              {/* !!!!!!      Added in Embed Code Btn with FeatherIcon      !!!!!! */}
+              {/* <button className='embedCodeBtn' style={{border:'none', backgroundColor:'white'}}>
               Embed Code
                 <FeatherIcon icon={'more-horizontal'} size={'.85em'} style={{top:'7px', position:'absolute'}}/>
-              </button>
+              </button> */}
+
+              {/* !!!!!     Embed Code button     !!!!! */}
+              <div>
+                <EmbedCodeButton src="${SPARKLE_PATH}${tenantNameAsUrl}?widgetMode=true#bookings" id="framee" name="framee"  style={{border: 'none'}} width="600" height="400"/>
+              </div>
+              
               {boxes
                 .sort((a, b) => a.order - b.order)
                 .map((box, i) => {
