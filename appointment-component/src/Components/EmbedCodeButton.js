@@ -49,7 +49,7 @@ function EmbedCodeButton({ src, id, name, width, height }) {
       {showEmbedCode && (
         <div style={{position:'absolute', left:'415px', maxWidth:'494px', border:'solid thin ', zIndex:'10', fontSize:'16px'}}>
           {/* border color: rgb(210, 210, 210) */}
-          <h4 style={{display:'inline-block', padding:'6.5px'}}>Title</h4>
+          <h4 style={{display:'inline-block', padding:'6.5px'}}>Embed this code into one of your websites</h4>
           <CopyToClipboard text={embedCode} onCopy={handleCopy}>
             <button style={{position:'absolute', right:'10.5px', top:'5px', gap:'10px', justifyContent:'center', alignItems:'center', display:'flex', paddingLeft:'6px'}}>{copied ? 'Copied!' : 'Copy'}
               <FeatherIcon icon='copy' size={'1.45em'} style={{margin:'2px'}}/>
