@@ -604,8 +604,6 @@ function Appointments({
     }
   }, [data]);
 
-  const link = `${SPARKLE_PATH}${tenantNameAsUrl}?project=${projectId}#bookings`;
-
   return (
     <>
       {(!boxes || boxes.length === 0) && (!hiddenAppointments || hiddenAppointments.length === 0) ? (
@@ -636,11 +634,23 @@ function Appointments({
                   Save Re-ordering
                 </button>
               )}
+              <>
+                 {/* !!!!!     Embed Code button     !!!!! */}
+              {/* NOTE: turn this into flex container to position it better and more consistently with existing code! */}
+              <div className='embedCodeBtn'>
+                <EmbedCodeButton
+                  src="${SPARKLE_PATH}${tenantNameAsUrl}?widgetMode=true#bookings"
+                  id="framee"
+                  name="framee" 
+                  style={{border: 'none'}} width="600" height="400"
+                />
+              </div>
+              </>
               <button
                 type="button"
                 className="btn round flex-c-c px-0 ml-4"
                 onClick={togglePopUp}
-                style={{ gap: 5, display:"flex", border:"none", background:"white", fontWeight:"bold"}}
+                style={{ gap: 5, display:"flex", border:"none", background:"#f7f7f7", fontWeight:"bold"}}
               >
                 Add <FeatherIcon icon={'plus'} size={'.95em'} />
                 <span style={{ width: 15, display: 'inline-block' }} />
@@ -652,16 +662,7 @@ function Appointments({
           {boxes && boxes.length > 0 && (
             <Section title={'Visible'} noBackground>
 
-              {/* !!!!!!      Added in Embed Code Btn with FeatherIcon      !!!!!! */}
-              {/* <button className='embedCodeBtn' style={{border:'none', backgroundColor:'white'}}>
-              Embed Code
-                <FeatherIcon icon={'more-horizontal'} size={'.85em'} style={{top:'7px', position:'absolute'}}/>
-              </button> */}
-
-              {/* !!!!!     Embed Code button     !!!!! */}
-              <div>
-                <EmbedCodeButton src="${SPARKLE_PATH}${tenantNameAsUrl}?widgetMode=true#bookings" id="framee" name="framee"  style={{border: 'none'}} width="600" height="400"/>
-              </div>
+             
               
               {boxes
                 .sort((a, b) => a.order - b.order)

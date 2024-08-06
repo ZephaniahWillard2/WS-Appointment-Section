@@ -330,6 +330,8 @@ export const Section = ({
               flexDirection: 'row',
               justifyContent: 'space-between',
               gap: 3,
+              paddingBottom:'1em'
+              //!!!!!     Added paddingBottom
             }}
           >
             {title && <SectionTitle>{title}</SectionTitle>}

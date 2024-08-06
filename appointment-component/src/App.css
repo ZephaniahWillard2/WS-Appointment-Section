@@ -110,7 +110,7 @@ element.style {
     gap: 10px;
     align-content: center;
     padding: calc(var(--content-pad)* .5) calc(var(--content-pad)* .5) calc(var(--content-pad)* .5) var(--content-pad);
-    box-shadow: 1px solid rgb(221, 221, 221);
+    /* box-shadow: 1px solid rgb(221, 221, 221); */
     font-size: large;
 }
 
@@ -432,15 +432,31 @@ color: white;
 
   /* Embed Code Button */
   .embedCodeBtn{
-    position: absolute;
-    right: 37px;
-    z-index: 100;
-    top: 0;
+    /* position: absolute;
+    z-index: 100; */
+        /* Demo4 Styles */
+    /* right: 286px; */
+        /* Demo3 styles */
+    /* right: 86px; */
+    /* top: -56px; */
+        /* Demo1/2 styles */
+    /* right: 37px;
+    top: 0; */
     font-size: 1.1rem;
-    margin-bottom: 0.75rem;
+    /* margin-bottom: 0.75rem; */
     font-weight: bold;
     font-family: Poppins !important;
+    
+    display: flex;
+    /* flex: 1 1 0%; */
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 3px;
+    /* padding-bottom: 1em; */
 }
+/* .embedCodeBtn button:hover{
+    color: blue;
+} */
 
 .flex-c-c {
     /* display: flex; */
@@ -458,3 +474,12 @@ color: white;
     font-family: Poppins !important;
 }
    */
+
+   #app, html, body {
+    background: #f7f7f7;
+}
+
+
+.language-jsx{
+  
+}
